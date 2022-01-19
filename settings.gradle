@@ -1,2 +1,2 @@
-rootProject.name = 'java_professional'
-
+rootProject.name = 'javaProfessional'
+include 'hw01-gradle'

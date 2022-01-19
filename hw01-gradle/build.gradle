@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow'
+}
+
+dependencies {
+    implementation 'com.google.guava:guava'
+    implementation 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+shadowJar {
+    archiveBaseName.set('homework01')
+    archiveVersion.set('0.1')
+    archiveClassifier.set('')
+    manifest {
+        attributes 'Main-Class': 'ru.otus.homework01.HelloOtus'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.build.dependsOn tasks.shadowJar
