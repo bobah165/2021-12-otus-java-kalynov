@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow'
+}
+
+dependencies {
+    testImplementation ('org.junit.jupiter:junit-jupiter-api')
+    testImplementation ('org.junit.jupiter:junit-jupiter-engine')
+    testImplementation ('org.assertj:assertj-core')
+    testImplementation ('org.mockito:mockito-core')
+    testImplementation ('org.mockito:mockito-junit-jupiter')
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.with {
+        encoding = 'UTF-8'
+    }
+}
+
+shadowJar {
+    archiveBaseName.set('homework01')
+    archiveVersion.set('0.1')
+    archiveClassifier.set('')
+    manifest {
+        attributes 'Main-Class': 'ru.otus.homework01.HelloOtus'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.build.dependsOn tasks.shadowJar
