@@ -10,10 +10,10 @@ public class CustomerReverseOrder {
     //надо подобрать подходящую структуру данных, тогда решение будет в "две строчки"
 
     public void add(Customer customer) {
-        customers.add(customer);
+        customers.push(customer);
     }
 
     public Customer take() {
-        return customers.pollLast(); // это "заглушка, чтобы скомилировать"
+        return customers.pop(); // это "заглушка, чтобы скомилировать"
     }
 }

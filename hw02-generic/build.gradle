@@ -24,6 +24,7 @@ tasks.withType(JavaCompile) {
     }
 }
 
+
 shadowJar {
     archiveBaseName.set('homework01')
     archiveVersion.set('0.1')
@@ -31,10 +32,6 @@ shadowJar {
     manifest {
         attributes 'Main-Class': 'ru.otus.homework01.HelloOtus'
     }
-}
-
-test {
-    useJUnitPlatform()
 }
 
 tasks.build.dependsOn tasks.shadowJar
