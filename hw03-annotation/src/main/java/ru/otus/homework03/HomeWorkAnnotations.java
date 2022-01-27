@@ -1,7 +1,10 @@
 package ru.otus.homework03;
 
+import ru.otus.homework03.service.TestRunnerService;
+
+
 public class HomeWorkAnnotations {
-    public static void main(String[] args) {
-        System.out.println("hello homework 3");
+    public static void main(String[] args) throws Exception {
+        TestRunnerService.runTests(AnnotationTest.class);
     }
 }
