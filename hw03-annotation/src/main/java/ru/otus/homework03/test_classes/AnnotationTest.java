@@ -1,4 +1,4 @@
-package ru.otus.homework03;
+package ru.otus.homework03.test_classes;
 
 import ru.otus.homework03.annotation.After;
 import ru.otus.homework03.annotation.Before;
@@ -20,7 +20,12 @@ public class AnnotationTest {
 
     @Test
     public void anyTest2() {
-        System.out.print("@Test: anyTest2. ");
+        throw new RuntimeException();
+    }
+
+    @Test
+    public void anyTest3() {
+        System.out.print("@Test: anyTest3. ");
         System.out.println("Экземпляр тестового класса: " + Integer.toHexString(hashCode()));
     }
 
