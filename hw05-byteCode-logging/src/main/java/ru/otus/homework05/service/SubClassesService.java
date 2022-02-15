@@ -1,5 +1,7 @@
 package ru.otus.homework05.service;
 
+import ru.otus.homework05.exceptions.NoClassInApplicationException;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +9,7 @@ import java.util.List;
 
 public class SubClassesService {
 
-    public static <T> List<Class> getSubClasses(Class<T> currentInterface) {
+    public static <T> List<Class<?>> getSubClasses(Class<T> currentInterface) {
         var classLoader = currentInterface.getClassLoader();
         var packageName = currentInterface.getPackageName();
         var dirPath = packageName.replace(".", "/");
@@ -17,8 +19,8 @@ public class SubClassesService {
         return find(currentInterface, packageName, files);
     }
 
-    private static <T> List<Class> find(Class<T> currentInterface, String packageName, File[] files) {
-        var subClassList = new ArrayList<Class>();
+    private static <T> List<Class<?>> find(Class<T> currentInterface, String packageName, File[] files) {
+        var subClassList = new ArrayList<Class<?>>();
         for (var file : files) {
             if (file.isDirectory()) {
                 var currentPackageName = packageName + "." + file.getName();
@@ -32,7 +34,8 @@ public class SubClassesService {
         return subClassList;
     }
 
-    private static <T> void addSubClassToList(Class<T> currentInterface, String subClassName, List<Class> subClassList) {
+    @SuppressWarnings("unchecked")
+    private static <T> void addSubClassToList(Class<T> currentInterface, String subClassName, List<Class<?>> subClassList) {
         try {
             var tempClass = Class.forName(subClassName);
             if (!tempClass.isInterface()) {
@@ -42,7 +45,7 @@ public class SubClassesService {
                 }
             }
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new NoClassInApplicationException("No subclass implementation or " + subClassName + " doesn't exist");
         }
     }
 
