@@ -10,6 +10,7 @@ public class AtmService {
     public static Atm getAtmInstance() {
         if (atm==null) {
             atm = new Atm();
+            atm.setCashStore(CashStoreService.initialize());
         }
         return atm;
     }
