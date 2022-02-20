@@ -2,21 +2,21 @@ package ru.otus.homework06.model;
 
 public class Atm {
     private long totalSum;
-    private Cash cash;
+    private CashStore cashStore;
 
     public long getTotalSum() {
         return totalSum;
     }
 
-    public Cash getCash() {
-        return cash;
+    public CashStore getCashStore() {
+        return cashStore;
     }
 
     public void setTotalSum(long totalSum) {
         this.totalSum = totalSum;
     }
 
-    public void setCash(Cash cash) {
-        this.cash = cash;
+    public void setCashStore(CashStore cashStore) {
+        this.cashStore = cashStore;
     }
 }
