@@ -24,4 +24,12 @@ public class Cash {
         this.banknotes = banknotes;
         this.count = count;
     }
+
+    @Override
+    public String toString() {
+        return "Cash{" +
+                "banknotes=" + banknotes +
+                ", count=" + count +
+                '}';
+    }
 }

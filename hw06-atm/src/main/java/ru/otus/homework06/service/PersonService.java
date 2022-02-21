@@ -9,7 +9,8 @@ import java.util.List;
 public class PersonService {
 
     public static List<Cash> getCashFromPerson() {
-        return List.of(new Cash(Banknotes.TWO_HUNDRED, 3),
-                        new Cash(Banknotes.ONE_HUNDRED,5));
+        return List.of( new Cash(Banknotes.TWO_HUNDRED, 3),
+                        new Cash(Banknotes.ONE_HUNDRED, 5),
+                        new Cash(Banknotes.ONE_THOUSAND, 3));
     }
 }

@@ -14,6 +14,7 @@ public class TakeMoneyService {
 
         cashStoreFromPerson.forEach(cash -> {
             addCashToAtmCashStore(cash, atmCashStore);
+            CalculateTotalSumInAtmService.calculate(cash);
         });
     }
 

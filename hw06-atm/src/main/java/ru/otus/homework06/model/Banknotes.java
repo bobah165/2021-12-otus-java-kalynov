@@ -6,7 +6,8 @@ public enum Banknotes {
     FIVE_HUNDRED(500),
     ONE_THOUSAND(1000),
     TWO_THOUSAND(2000),
-    FIVE_THOUSAND(5000);
+    FIVE_THOUSAND(5000),
+    NULL(0);
     private int denomination;
 
     Banknotes (int denomination) {

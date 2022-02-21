@@ -1,5 +1,8 @@
 package ru.otus.homework06.model;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CashStore {
     private final Cash oneHundred;
     private final Cash twoHundred;
@@ -7,6 +10,16 @@ public class CashStore {
     private final Cash oneThousand;
     private final Cash twoThousand;
     private final Cash fiveThousand;
+
+    @Override
+    public String toString() {
+        var cashList = List.of(this.getOneHundred(), this.getTwoHundred(), this.getFiveHundred(),
+                this.getOneThousand(), this.getTwoThousand(), this.getFiveThousand());
+        return cashList.stream()
+                       .filter(cash -> cash.getCount() > 0)
+                       .map(cash -> cash.getBanknotes().toString() + " - " + cash.getCount() + " banknote(s)")
+                       .collect(Collectors.joining(", "));
+    }
 
     public Cash getOneHundred() {
         return oneHundred;
@@ -41,7 +54,7 @@ public class CashStore {
         this.fiveThousand = builder.fiveThousand;
     }
 
-    public static class Builder{
+    public static class Builder {
         private Cash oneHundred;
         private Cash twoHundred;
         private Cash fiveHundred;
