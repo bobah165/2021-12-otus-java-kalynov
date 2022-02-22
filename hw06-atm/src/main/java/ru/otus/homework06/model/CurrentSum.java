@@ -1,17 +1,17 @@
 package ru.otus.homework06.model;
 
 public class CurrentSum {
-    private Integer integer;
+    private Integer currentSum;
 
-    public CurrentSum(Integer integer) {
-        this.integer = integer;
+    public CurrentSum(Integer currentSum) {
+        this.currentSum = currentSum;
     }
 
-    public Integer getInteger() {
-        return integer;
+    public Integer getCurrentSum() {
+        return currentSum;
     }
 
-    public void setInteger(Integer integer) {
-        this.integer = integer;
+    public void setCurrentSum(Integer currentSum) {
+        this.currentSum = currentSum;
     }
 }

@@ -15,4 +15,13 @@ public class CashStoreService {
                                       .setFiveThousand(new Cash(Banknotes.FIVE_THOUSAND, 0))
                                       .build();
     }
+
+    public static void reCountNumberOfBanknotes(CashStore atmCashStore, CashStore personCashStore) {
+        atmCashStore.getOneHundred().setCount(atmCashStore.getOneHundred().getCount() - personCashStore.getOneHundred().getCount());
+        atmCashStore.getTwoHundred().setCount(atmCashStore.getTwoHundred().getCount() - personCashStore.getTwoHundred().getCount());
+        atmCashStore.getFiveHundred().setCount(atmCashStore.getFiveHundred().getCount() - personCashStore.getFiveHundred().getCount());
+        atmCashStore.getOneThousand().setCount(atmCashStore.getOneThousand().getCount() - personCashStore.getOneThousand().getCount());
+        atmCashStore.getTwoThousand().setCount(atmCashStore.getTwoThousand().getCount() - personCashStore.getTwoThousand().getCount());
+        atmCashStore.getFiveThousand().setCount(atmCashStore.getFiveThousand().getCount() - personCashStore.getFiveThousand().getCount());
+    }
 }

@@ -8,4 +8,9 @@ public class PrintService {
         Atm atm = AtmService.getAtmInstance();
         return atm.getTotalSum();
     }
+
+    public static void printBalanceByBanknotes() {
+        Atm atm = AtmService.getAtmInstance();
+        System.out.println("Remaining banknotes in ATM " + atm.getCashStore());
+    }
 }

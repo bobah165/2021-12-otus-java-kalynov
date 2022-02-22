@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CashStore {
-    private final Cash oneHundred;
-    private final Cash twoHundred;
-    private final Cash fiveHundred;
-    private final Cash oneThousand;
-    private final Cash twoThousand;
-    private final Cash fiveThousand;
+    private Cash oneHundred;
+    private Cash twoHundred;
+    private Cash fiveHundred;
+    private Cash oneThousand;
+    private Cash twoThousand;
+    private Cash fiveThousand;
 
     @Override
     public String toString() {
@@ -19,6 +19,30 @@ public class CashStore {
                        .filter(cash -> cash.getCount() > 0)
                        .map(cash -> cash.getBanknotes().toString() + " - " + cash.getCount() + " banknote(s)")
                        .collect(Collectors.joining(", "));
+    }
+
+    public void setOneHundred(Cash oneHundred) {
+        this.oneHundred = oneHundred;
+    }
+
+    public void setTwoHundred(Cash twoHundred) {
+        this.twoHundred = twoHundred;
+    }
+
+    public void setFiveHundred(Cash fiveHundred) {
+        this.fiveHundred = fiveHundred;
+    }
+
+    public void setOneThousand(Cash oneThousand) {
+        this.oneThousand = oneThousand;
+    }
+
+    public void setTwoThousand(Cash twoThousand) {
+        this.twoThousand = twoThousand;
+    }
+
+    public void setFiveThousand(Cash fiveThousand) {
+        this.fiveThousand = fiveThousand;
     }
 
     public Cash getOneHundred() {
