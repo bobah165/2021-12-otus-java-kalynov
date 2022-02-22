@@ -8,10 +8,10 @@ import ru.otus.homework06.model.CurrentSum;
 
 public class GiveMoneyService {
 
-    public static CashStore giveMoney(int sum) {
+    public static CashStore giveMoneyToPerson(int sum) {
         Atm atm = AtmService.getAtmInstance();
         if (atm.getTotalSum() < sum) {
-            return new CashStore.Builder().build();
+            return CashStoreService.initialize();
         }
         CalculateTotalSumInAtmService.calculateBalance(sum);
         var currentSum = new CurrentSum(sum);

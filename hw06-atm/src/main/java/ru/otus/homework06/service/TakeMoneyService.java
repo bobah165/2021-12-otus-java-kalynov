@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TakeMoneyService {
 
-    public static void takeCash(List<Cash> cashStoreFromPerson) {
+    public static void takePersonCash(List<Cash> cashStoreFromPerson) {
         Atm atm = AtmService.getAtmInstance();
         CashStore atmCashStore = atm.getCashStore();
 
