@@ -1,17 +1,9 @@
 package ru.otus.homework06.service;
 
-import ru.otus.homework06.model.Atm;
+import ru.otus.homework06.model.CashStore;
 
-public class AtmService {
-    private static Atm atm;
-
-    private AtmService() {}
-
-    public static Atm getAtmInstance() {
-        if (atm==null) {
-            atm = new Atm();
-            atm.setCashStore(CashStoreService.initialize());
-        }
-        return atm;
-    }
+public interface AtmService {
+    CashStore getCashStore();
+    int getTotalSum();
+    void reCountNumberOfBanknotes(CashStore personCashStore);
 }

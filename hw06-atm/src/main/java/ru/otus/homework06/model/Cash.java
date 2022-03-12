@@ -1,14 +1,11 @@
 package ru.otus.homework06.model;
 
 public class Cash {
-    private Banknotes banknotes;
+    private final Banknotes banknotes;
     private int count;
 
-    public void setBanknotes(Banknotes banknotes) {
+    public Cash(Banknotes banknotes, Integer count) {
         this.banknotes = banknotes;
-    }
-
-    public void setCount(int count) {
         this.count = count;
     }
 
@@ -18,11 +15,6 @@ public class Cash {
 
     public int getCount() {
         return count;
-    }
-
-    public Cash(Banknotes banknotes, int count) {
-        this.banknotes = banknotes;
-        this.count = count;
     }
 
     @Override
