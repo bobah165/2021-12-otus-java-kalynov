@@ -1,8 +1,13 @@
 package ru.otus;
 
+import ru.otus.handler.ComplexProcessor;
+import ru.otus.listener.homework.HistoryListener;
 import ru.otus.model.Message;
-import ru.otus.processor.Processor;
 import ru.otus.processor.ProcessorChangeFields;
+import ru.otus.processor.ProcessorSecond;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class HomeWork {
 
@@ -20,6 +25,16 @@ public class HomeWork {
      */
 
     public static void main(String[] args) {
+        var processors = List.of(new ProcessorChangeFields(),
+                new ProcessorSecond(HomeWork::getSeconds));
+
+        var complexProcessor = new ComplexProcessor(processors, ex -> {
+            System.out.print("Even second");
+        });
+
+        var historyListener = new HistoryListener();
+        complexProcessor.addListener(historyListener);
+
         Message message = new Message.Builder(1)
                 .field4("asdf")
                 .field2("adf")
@@ -27,17 +42,24 @@ public class HomeWork {
                 .field12("789")
                 .build();
 
-        System.out.println(message);
+        var result = complexProcessor.handle(message);
+        System.out.println();
+        System.out.println("result:" + result);
 
-        Processor processor = new ProcessorChangeFields();
-        Message newMessage = processor.process(message);
-
-        System.out.println(newMessage);
+        complexProcessor.removeListener(historyListener);
 
 
         /*
            по аналогии с Demo.class
            из элеменов "to do" создать new ComplexProcessor и обработать сообщение
          */
+    }
+
+    private static int getSeconds() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        int hours = localDateTime.getHour();
+        int minutes = localDateTime.getMinute();
+        int seconds = localDateTime.getSecond();
+        return hours * 3600 + minutes * 60 + seconds;
     }
 }

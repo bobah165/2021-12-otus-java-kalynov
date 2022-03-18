@@ -1,5 +1,7 @@
 package ru.otus.model;
 
+import java.util.ArrayList;
+
 public class Message {
     private final long id;
     private final String field1;
@@ -85,7 +87,11 @@ public class Message {
 
     public String getField12() { return field12; }
 
-    public ObjectForMessage getField13() { return field13; }
+    public ObjectForMessage getField13() {
+        ObjectForMessage objectForMessage = new ObjectForMessage();
+        objectForMessage.setData(new ArrayList<>(field13.getData()));
+        return objectForMessage;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -226,7 +232,9 @@ public class Message {
         }
 
         public Builder field13(ObjectForMessage field13) {
-            this.field13 = field13;
+            ObjectForMessage objectForMessage = new ObjectForMessage();
+            objectForMessage.setData(new ArrayList<>(field13.getData()));
+            this.field13 = objectForMessage;
             return this;
         }
 

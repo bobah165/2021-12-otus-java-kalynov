@@ -6,7 +6,10 @@ import org.junit.jupiter.api.Test;
 import ru.otus.listener.Listener;
 import ru.otus.model.Message;
 import ru.otus.processor.Processor;
+import ru.otus.processor.ProcessorSecond;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,6 +96,40 @@ class ComplexProcessorTest {
         //then
         verify(listener, times(1)).onUpdated(message);
     }
+
+    @Test
+    @DisplayName("Тестируем нечетные секунды")
+    void secondsOddTest() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        runProcessors(1);
+
+        assertThat(outContent.toString()).isEqualTo("Odd second");
+    }
+
+    @Test
+    @DisplayName("Тестируем четные секунды")
+    void secondsEvenTest() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        runProcessors(10);
+
+        assertThat(outContent.toString()).isEqualTo("Even second");
+    }
+
+    private void runProcessors(int second) {
+        List<Processor> processors = List.of(new ProcessorSecond(()->second));
+        var complexProcessor = new ComplexProcessor(processors, ex -> {
+            System.out.print("Even second");
+        });
+
+        Message message = new Message.Builder(1).build();
+
+        complexProcessor.handle(message);
+    }
+
 
     private static class TestException extends RuntimeException {
         public TestException(String message) {
