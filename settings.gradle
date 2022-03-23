@@ -6,4 +6,6 @@ include 'hw04-garbage'
 include 'hw05-byteCode-logging'
 include 'hw06-atm'
 include 'hw07-patterns'
+include 'hw07-serialization'
+include 'hw08-serialization'
 
