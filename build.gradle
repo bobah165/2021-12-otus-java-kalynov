@@ -27,12 +27,17 @@ allprojects {
                 mavenBom("org.springframework.boot:spring-boot-dependencies:2.5.2")
             }
             dependency "com.google.guava:guava:${Versions.guava}"
+            dependency("org.glassfish:javax.json:${Versions.glassfishJson}")
+            dependency("com.google.protobuf:protobuf-java-util:${Versions.protobuf}")
         }
     }
 
     configurations.all {
         resolutionStrategy {
             failOnVersionConflict()
+        }
+        resolutionStrategy {
+            force("com.google.errorprone:error_prone_annotations:2.11.0")
         }
     }
 }
