@@ -2,11 +2,16 @@ package ru.otus.jdbc.mapper;
 
 
 import ru.otus.jdbc.core.repository.DataTemplate;
+import ru.otus.jdbc.core.repository.DataTemplateException;
 import ru.otus.jdbc.core.repository.executor.DbExecutor;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Сохратяет объект в базу, читает объект из базы
@@ -14,16 +19,52 @@ import java.util.Optional;
 public class DataTemplateJdbc<T> implements DataTemplate<T> {
 
     private final DbExecutor dbExecutor;
-    private final EntitySQLMetaData entitySQLMetaData;
+    private final EntitySQLMetaData<T> entitySQLMetaData;
+    private final EntityClassMetaData<T> entityClassMetaData;
 
-    public DataTemplateJdbc(DbExecutor dbExecutor, EntitySQLMetaData entitySQLMetaData) {
+    public DataTemplateJdbc(DbExecutor dbExecutor, EntitySQLMetaData<T> entitySQLMetaData, EntityClassMetaData<T> entityClassMetaData) {
         this.dbExecutor = dbExecutor;
         this.entitySQLMetaData = entitySQLMetaData;
+        this.entityClassMetaData = entityClassMetaData;
     }
 
     @Override
     public Optional<T> findById(Connection connection, long id) {
-        throw new UnsupportedOperationException();
+        return dbExecutor.executeSelect(connection, entitySQLMetaData.getSelectByIdSql(), List.of(id), rs -> {
+            try {
+                T entity = null;
+                if (rs.next()) {
+                    var constructor = entityClassMetaData.getConstructor();
+                    try {
+                        entity = constructor.newInstance();
+                        setFieldsValue(entity, rs);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return entity;
+                }
+                return null;
+            } catch (SQLException e) {
+                throw new DataTemplateException(e);
+            }
+        });
+    }
+
+    private T setFieldsValue(T entity, ResultSet rs) {
+        entityClassMetaData.getAllFields()
+                           .stream()
+                           .peek(field -> field.setAccessible(true))
+                           .peek(field -> {
+                               try {
+                                   if (rs.isFirst()) {
+                                       field.set(entity,rs.getLong(field.getName()));
+                                   }
+                                   field.set(entity, rs.getString(field.getName()));
+                               } catch (Exception e) {
+                                   e.printStackTrace();
+                               }
+                           }).count();
+        return entity;
     }
 
     @Override
@@ -33,11 +74,51 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
 
     @Override
     public long insert(Connection connection, T client) {
-        throw new UnsupportedOperationException();
+        try {
+            return dbExecutor.executeStatement(connection, entitySQLMetaData.getInsertSql(), getInsertValues(client));
+        } catch (Exception e) {
+            throw new DataTemplateException(e);
+        }
     }
 
     @Override
     public void update(Connection connection, T client) {
-        throw new UnsupportedOperationException();
+        try {
+            dbExecutor.executeStatement(connection, entitySQLMetaData.getUpdateSql(), getUpdateFields(client));
+        } catch (Exception e) {
+            throw new DataTemplateException(e);
+        }
+    }
+
+    private List<Object> getUpdateFields(T entity) {
+        return entityClassMetaData.getFieldsWithoutId()
+                                  .stream()
+                                  .peek(field -> field.setAccessible(true))
+                                  .map(field -> {
+                                      try {
+                                          return field.get(entity);
+                                      } catch (IllegalAccessException e) {
+                                          e.printStackTrace();
+                                      }
+                                      return new Object();
+                                  })
+                                  .filter(Objects::nonNull)
+                                  .collect(Collectors.toList());
+    }
+
+    private List<Object> getInsertValues(T entity) {
+        return entityClassMetaData.getAllFields()
+                                  .stream()
+                                  .peek(field -> field.setAccessible(true))
+                                  .map(field -> {
+                                      try {
+                                          return field.get(entity);
+                                      } catch (IllegalAccessException e) {
+                                          e.printStackTrace();
+                                      }
+                                      return new Object();
+                                  })
+                                  .filter(Objects::nonNull)
+                                  .collect(Collectors.toList());
     }
 }
