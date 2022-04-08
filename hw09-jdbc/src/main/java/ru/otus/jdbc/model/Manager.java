@@ -1,6 +1,9 @@
 package ru.otus.jdbc.model;
 
+import ru.otus.jdbc.annotation.Id;
+
 public class Manager {
+    @Id
     private Long no;
     private String label;
     private String param1;
