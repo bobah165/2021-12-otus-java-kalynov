@@ -5,6 +5,7 @@ import ru.otus.jdbc.core.repository.DataTemplate;
 import ru.otus.jdbc.core.repository.DataTemplateException;
 import ru.otus.jdbc.core.repository.executor.DbExecutor;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,19 +52,17 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
     }
 
     private T setFieldsValue(T entity, ResultSet rs) {
-        entityClassMetaData.getAllFields()
-                           .stream()
-                           .peek(field -> field.setAccessible(true))
-                           .peek(field -> {
-                               try {
-                                   if (rs.isFirst()) {
-                                       field.set(entity,rs.getLong(field.getName()));
-                                   }
-                                   field.set(entity, rs.getString(field.getName()));
-                               } catch (Exception e) {
-                                   e.printStackTrace();
-                               }
-                           }).count();
+
+        for (Field field: entityClassMetaData.getAllFields()) {
+            field.setAccessible(true);
+            try {
+                if (field.getGenericType().equals(Long.class)) {
+                    field.set(entity, rs.getLong(field.getName()));
+                    continue;
+                }
+                field.set(entity, rs.getString(field.getName()));
+            }catch (Exception ex) {}
+        }
         return entity;
     }
 
