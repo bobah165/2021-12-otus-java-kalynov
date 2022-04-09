@@ -20,8 +20,7 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData<T> {
     public String getSelectByIdSql() {
         var tableName = getTableName();
         var idFieldName = entityClassMetaData.getIdField().getName();
-        var allFieldsName = entityClassMetaData.getAllFields().stream().map(Field::getName)
-                .collect(Collectors.joining(", "));
+        var allFieldsName = getAllFieldsName();
         return "select " + allFieldsName + " from " + tableName + " where " + idFieldName + "=?";
     }
 
@@ -49,23 +48,16 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData<T> {
         return arrayOfPackageNames[arrayOfPackageNames.length - 1].toLowerCase();
     }
 
+    private String getAllFieldsName() {
+        return entityClassMetaData.getAllFields().stream().map(Field::getName)
+                                  .collect(Collectors.joining(", "));
+    }
+
     private String getUpdateFields() {
         return entityClassMetaData.getFieldsWithoutId()
                                   .stream()
                                   .map(field -> field.getName() + "= ? ")
                                   .collect(Collectors.joining(", "));
-    }
-
-
-    private Long getIdValue(T entity) {
-        var idField = entityClassMetaData.getIdField();
-        idField.setAccessible(true);
-        try {
-            return (Long) idField.get(entity);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return -1L;
     }
 
 
@@ -82,19 +74,4 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData<T> {
                                   .map(field -> " ? ")
                                   .collect(Collectors.joining(", "));
     }
-
-//    private String readValues(T entity) {
-//        return entityClassMetaData.getAllFields()
-//                                  .stream()
-//                                  .peek(field -> field.setAccessible(true))
-//                                  .map(field -> {
-//                                      try {
-//                                          return field.get(entity).toString();
-//                                      } catch (IllegalAccessException e) {
-//                                          e.printStackTrace();
-//                                      }
-//                                      return "";
-//                                  })
-//                                  .collect(Collectors.joining(", "));
-//    }
 }

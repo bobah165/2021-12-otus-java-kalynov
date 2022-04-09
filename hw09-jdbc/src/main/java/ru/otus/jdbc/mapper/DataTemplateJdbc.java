@@ -51,8 +51,7 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
         });
     }
 
-    private T setFieldsValue(T entity, ResultSet rs) {
-
+    private void setFieldsValue(T entity, ResultSet rs) {
         for (Field field: entityClassMetaData.getAllFields()) {
             field.setAccessible(true);
             try {
@@ -61,9 +60,10 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
                     continue;
                 }
                 field.set(entity, rs.getString(field.getName()));
-            }catch (Exception ex) {}
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
-        return entity;
     }
 
     @Override
