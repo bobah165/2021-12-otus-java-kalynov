@@ -11,12 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "client")
-public class Client implements Cloneable {
+public class Client implements Cloneable, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +30,7 @@ public class Client implements Cloneable {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Address address;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Phone> phones;
 
     public Client() {
@@ -96,19 +97,6 @@ public class Client implements Cloneable {
                 ", name='" + name + '\'' +
                 '}';
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Client client = (Client) o;
-//        return Objects.equals(id, client.id) && Objects.equals(name, client.name);
-//    }
-
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, name);
-//    }
 
     private List<Phone> getUpdatedPhoneList(List<Phone> phones) {
         phones.forEach(phone -> phone.setClient(this));
