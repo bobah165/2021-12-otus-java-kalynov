@@ -53,26 +53,22 @@ class HomeworkTest {
 
     @Test
     public void testHomeworkRequirementsForUpdatesCount() {
-//        applyCustomSqlStatementLogger(new SqlStatementLogger(true, false, false, 0) {
-//            @Override
-//            public void logStatement(String statement) {
-//                assertThat(statement).doesNotContain("update");
-//                super.logStatement(statement);
-//            }
-//        });
+        applyCustomSqlStatementLogger(new SqlStatementLogger(true, false, false, 0) {
+            @Override
+            public void logStatement(String statement) {
+                assertThat(statement).doesNotContain("update");
+                super.logStatement(statement);
+            }
+        });
 
         var client = new Client(null, "Vasya", new Address(null, "AnyStreet"),
             List.of(new Phone(null, "13-555-22"), new Phone(null, "14-666-333")));
         try (var session = sessionFactory.openSession()) {
             session.getTransaction().begin();
             session.persist(client);
-            session.detach(client);
-            session.flush();
             session.getTransaction().commit();
 
             session.clear();
-
-            var res = session.createQuery("from Phone", Phone.class);
 
             var loadedClient = session.find(Client.class, 1L).clone();
             assertThat(loadedClient)

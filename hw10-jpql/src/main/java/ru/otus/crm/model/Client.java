@@ -8,13 +8,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "client")
@@ -31,9 +29,8 @@ public class Client implements Cloneable {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Address address;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "client_id")
-    private List<Phone> phone = new ArrayList<>();
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Phone> phones;
 
     public Client() {
     }
@@ -48,16 +45,16 @@ public class Client implements Cloneable {
         this.name = name;
     }
 
-    public Client(Long id, String name, Address address, List<Phone> phone) {
+    public Client(Long id, String name, Address address, List<Phone> phones) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.phone = phone;
+        this.phones = phones == null ? new ArrayList<>() : getUpdatedPhoneList(phones);
     }
 
     @Override
     public Client clone() {
-        return new Client(this.id, this.name, this.address, this.phone);
+        return new Client(this.id, this.name, this.address, this.phones);
     }
 
     public Long getId() {
@@ -84,12 +81,12 @@ public class Client implements Cloneable {
         this.address = address;
     }
 
-    public List<Phone> getPhone() {
-        return phone;
+    public List<Phone> getPhones() {
+        return phones;
     }
 
-    public void setPhone(List<Phone> phone) {
-        this.phone = phone;
+    public void setPhones(List<Phone> phones) {
+        this.phones = phones;
     }
 
     @Override
@@ -100,16 +97,21 @@ public class Client implements Cloneable {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Client client = (Client) o;
-        return Objects.equals(id, client.id) && Objects.equals(name, client.name);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Client client = (Client) o;
+//        return Objects.equals(id, client.id) && Objects.equals(name, client.name);
+//    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, name);
+//    }
+
+    private List<Phone> getUpdatedPhoneList(List<Phone> phones) {
+        phones.forEach(phone -> phone.setClient(this));
+        return phones;
     }
 }
