@@ -31,6 +31,8 @@ public class TestContainersConfig {
             System.setProperty("app.datasource.demo-db.password", container.getPassword());
 
             logger.info("postgres in docker started: url={}", url);
+            logger.info("password {}", container.getPassword());
+            logger.info("user {}", container.getUsername());
         }
 
         @Override
