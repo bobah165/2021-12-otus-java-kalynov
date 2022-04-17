@@ -11,4 +11,8 @@ create table phone
     client_id bigint
 );
 
+ALTER TABLE phone
+ADD CONSTRAINT phone_client_id_fk
+FOREIGN KEY (client_id) REFERENCES client;
+
 

@@ -68,7 +68,7 @@ class HomeworkTest {
             session.persist(client);
             session.getTransaction().commit();
 
-            session.clear();
+//            session.clear();
 
             var loadedClient = session.find(Client.class, 1L).clone();
             assertThat(loadedClient)
