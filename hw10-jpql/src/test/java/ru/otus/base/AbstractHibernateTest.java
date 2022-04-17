@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import ru.otus.core.repository.DataTemplateHibernate;
+import ru.otus.core.repository.EntityGraphUtil;
 import ru.otus.core.repository.HibernateUtils;
 import ru.otus.core.sessionmanager.TransactionManagerHibernate;
 import ru.otus.crm.dbmigrations.MigrationsExecutorFlyway;
@@ -25,6 +26,7 @@ public abstract class AbstractHibernateTest {
     protected TransactionManagerHibernate transactionManager;
     protected DataTemplateHibernate<Client> clientTemplate;
     protected DBServiceClient dbServiceClient;
+    protected EntityGraphUtil<Client> clientEntityGraph;
 
     private static TestContainersConfig.CustomPostgreSQLContainer CONTAINER;
 
@@ -54,10 +56,10 @@ public abstract class AbstractHibernateTest {
         configuration.setProperty("hibernate.connection.password", dbPassword);
 
         sessionFactory = HibernateUtils.buildSessionFactory(configuration, Client.class, Address.class, Phone.class);
-//        sessionFactory = HibernateUtils.buildSessionFactory(configuration, Client.class);
 
+        clientEntityGraph = new EntityGraphUtil<>(Client.class);
         transactionManager = new TransactionManagerHibernate(sessionFactory);
-        clientTemplate = new DataTemplateHibernate<>(Client.class);
+        clientTemplate = new DataTemplateHibernate<>(Client.class, clientEntityGraph);
         dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate);
     }
 
