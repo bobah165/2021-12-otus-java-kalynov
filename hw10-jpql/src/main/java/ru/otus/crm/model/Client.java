@@ -56,7 +56,7 @@ public class Client implements Cloneable {
 
     @Override
     public Client clone() {
-        return new Client(this.id, this.name, this.address, this.phones);
+        return new Client(this.id, this.name, new Address(this.address), new ArrayList<>(this.phones));
     }
 
     public Long getId() {

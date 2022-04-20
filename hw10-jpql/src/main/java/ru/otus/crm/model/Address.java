@@ -25,6 +25,12 @@ public class Address {
         this.street = street;
     }
 
+    public Address(Address address) {
+        this.id = address.getId();
+        this.street = address.getStreet();
+    }
+
+
     public Long getId() {
         return id;
     }
