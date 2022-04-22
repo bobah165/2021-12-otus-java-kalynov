@@ -32,6 +32,12 @@ public class Phone {
         this.number = number;
     }
 
+    public Phone(Phone phone) {
+        this.id = phone.getId();
+        this.number = phone.getNumber();
+        this.client = phone.getClient();
+    }
+
     public Long getId() {
         return id;
     }

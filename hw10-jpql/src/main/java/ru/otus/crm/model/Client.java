@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "client")
@@ -27,11 +28,11 @@ public class Client implements Cloneable {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Phone> phones;
 
     public Client() {
@@ -56,7 +57,13 @@ public class Client implements Cloneable {
 
     @Override
     public Client clone() {
-        return new Client(this.id, this.name, new Address(this.address), new ArrayList<>(this.phones));
+        return new Client(this.id, this.name, new Address(this.address), phoneCopy(this.phones));
+    }
+
+    private List<Phone> phoneCopy(List<Phone> phones) {
+        return phones.stream()
+                     .map(Phone::new)
+                     .collect(Collectors.toList());
     }
 
     public Long getId() {
