@@ -26,8 +26,13 @@ public class Address {
     }
 
     public Address(Address address) {
-        this.id = address.getId();
-        this.street = address.getStreet();
+        if (address == null) {
+            this.id = null;
+            this.street = null;
+        } else {
+            this.id = address.getId();
+            this.street = address.getStreet();
+        }
     }
 
 

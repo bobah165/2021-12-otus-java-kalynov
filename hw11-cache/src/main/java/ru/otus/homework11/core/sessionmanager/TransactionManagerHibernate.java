@@ -3,13 +3,13 @@ package ru.otus.homework11.core.sessionmanager;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.otus.homework11.crm.service.DbServiceClientImpl;
+import ru.otus.homework11.crm.service.impl.DbServiceClientDataBaseImpl;
 
 import java.util.concurrent.Callable;
 
 public class TransactionManagerHibernate implements TransactionManager {
     private final SessionFactory sessionFactory;
-    private static final Logger log = LoggerFactory.getLogger(DbServiceClientImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(DbServiceClientDataBaseImpl.class);
 
     public TransactionManagerHibernate(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

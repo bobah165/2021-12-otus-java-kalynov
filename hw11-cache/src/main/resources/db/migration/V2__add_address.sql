@@ -1,0 +1,1 @@
+ALTER TABLE client ADD COLUMN address_id bigint;

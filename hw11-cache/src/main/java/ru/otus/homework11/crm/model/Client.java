@@ -27,7 +27,7 @@ public class Client implements Cloneable {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -60,6 +60,7 @@ public class Client implements Cloneable {
     }
 
     private List<Phone> phoneCopy(List<Phone> phones) {
+        if (phones == null) return new ArrayList<>();
         return phones.stream()
                      .map(Phone::new)
                      .collect(Collectors.toList());

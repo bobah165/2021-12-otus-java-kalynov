@@ -1,6 +1,8 @@
 package ru.otus.homework11.cachehw;
 
 
+import java.util.List;
+
 public interface HwCache<K, V> {
 
     void put(K key, V value);
@@ -12,4 +14,8 @@ public interface HwCache<K, V> {
     void addListener(HwListener<K, V> listener);
 
     void removeListener(HwListener<K, V> listener);
+
+    List<V> findAll();
+
+    V update(K key, V value);
 }
