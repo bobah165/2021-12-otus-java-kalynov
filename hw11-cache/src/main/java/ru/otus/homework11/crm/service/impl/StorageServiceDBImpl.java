@@ -3,6 +3,7 @@ package ru.otus.homework11.crm.service.impl;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.homework11.cachehw.MyCache;
 import ru.otus.homework11.core.repository.DataTemplateHibernate;
 import ru.otus.homework11.core.repository.EntityGraphUtil;
 import ru.otus.homework11.core.repository.HibernateUtils;
@@ -24,9 +25,11 @@ public class StorageServiceDBImpl implements StorageService {
 
         var transactionManager = getTransaction();
         var clientTemplate = getClientTemplate();
-        var dbServiceClient = new DbServiceClientDataBaseImpl(transactionManager, clientTemplate);
+        var cache = new MyCache<String, Client>();
+        var cacheService = new CacheServiceImpl(cache);
+        var dbServiceClient = new DbServiceClientDataBaseImpl(clientTemplate, cacheService, transactionManager);
 
-        ClientService clientService = new ClientService();
+        ClientService clientService = new ClientServiceImpl();
         clientService.workWithClient(dbServiceClient);
 
         log.info("End DB time " + (System.currentTimeMillis() - startDBTime));

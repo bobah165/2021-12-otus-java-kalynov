@@ -18,4 +18,10 @@ public interface HwCache<K, V> {
     List<V> findAll();
 
     V update(K key, V value);
+
+    boolean isResetCountZero();
+
+    void reset();
+
+    boolean isRightSize(List<V> clientList);
 }

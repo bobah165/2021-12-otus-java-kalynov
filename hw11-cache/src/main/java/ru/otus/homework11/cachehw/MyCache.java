@@ -8,11 +8,17 @@ import java.util.WeakHashMap;
 
 public class MyCache<K, V> implements HwCache<K, V> {
     //Надо реализовать эти методы
-    private Map<K, V> cache = new WeakHashMap<>(10,1);
+    private static final int MAX_SIZE = 15;
+    private static int resetCount = 0;
+    private Map<K, V> cache = new WeakHashMap<>(10, 1);
     private List<HwListener> listenerList = new ArrayList<>();
 
     @Override
     public void put(K key, V value) {
+        if (cache.size() > MAX_SIZE) {
+            System.gc();
+            resetCount++;
+        }
         cache.put(key, value);
     }
 
@@ -47,5 +53,21 @@ public class MyCache<K, V> implements HwCache<K, V> {
     public V update(K key, V value) {
         cache.computeIfPresent(key, (k, v) -> v = value);
         return cache.get(key);
+    }
+
+    @Override
+    public boolean isResetCountZero() {
+        return resetCount == 0 ;
+    }
+
+    @Override
+    public void reset() {
+        cache.clear();
+        resetCount = 0;
+    }
+
+    @Override
+    public boolean isRightSize(List<V> clientList) {
+        return clientList.size() < MAX_SIZE;
     }
 }
