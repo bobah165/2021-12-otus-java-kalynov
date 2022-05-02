@@ -3,7 +3,7 @@ package ru.homework12.crm.service;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.homework12.base.AbstractHibernateTest;
-import ru.homework12.crm.model.Client;
+import ru.homework12.model.Client;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

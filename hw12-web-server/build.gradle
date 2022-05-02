@@ -25,6 +25,8 @@ dependencies {
     implementation("org.eclipse.jetty:jetty-util")
     implementation("org.freemarker:freemarker")
     implementation("com.google.code.gson:gson")
+    implementation("commons-io:commons-io")
+
 
     testImplementation("com.h2database:h2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine")

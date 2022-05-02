@@ -7,18 +7,18 @@ import org.hibernate.stat.Statistics;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import ru.homework12.core.repository.DataTemplateHibernate;
-import ru.homework12.core.repository.EntityGraphUtil;
-import ru.homework12.core.repository.HibernateUtils;
-import ru.homework12.core.sessionmanager.TransactionManagerHibernate;
-import ru.homework12.crm.dbmigrations.MigrationsExecutorFlyway;
-import ru.homework12.crm.model.Address;
-import ru.homework12.crm.model.Client;
-import ru.homework12.crm.model.Phone;
-import ru.homework12.crm.service.DBServiceClient;
-import ru.homework12.crm.service.DbServiceClientImpl;
+import ru.homework12.dao.dbmigrations.MigrationsExecutorFlyway;
+import ru.homework12.dao.repository.DataTemplateHibernate;
+import ru.homework12.dao.repository.EntityGraphUtil;
+import ru.homework12.dao.repository.HibernateUtils;
+import ru.homework12.dao.sessionmanager.TransactionManagerHibernate;
+import ru.homework12.model.Address;
+import ru.homework12.model.Client;
+import ru.homework12.model.Phone;
+import ru.homework12.services.DBServiceClient;
+import ru.homework12.services.impl.DbServiceClientImpl;
 
-import static ru.homework12.demo.DbServiceDemo.HIBERNATE_CFG_FILE;
+import static ru.homework12.DbServiceDemo.HIBERNATE_CFG_FILE;
 
 
 public abstract class AbstractHibernateTest {

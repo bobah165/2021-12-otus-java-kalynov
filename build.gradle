@@ -42,6 +42,7 @@ allprojects {
             dependency("org.eclipse.jetty:jetty-util:${Versions.jetty}")
             dependency("org.freemarker:freemarker:${Versions.freemarker}")
             dependency("com.google.code.gson:gson:${Versions.gson}")
+            dependency("commons-io:commons-io:${Versions.commonsIo}")
         }
     }
 

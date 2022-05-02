@@ -4,9 +4,9 @@ import junit.framework.AssertionFailedError;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.homework12.base.AbstractHibernateTest;
-import ru.homework12.crm.model.Address;
-import ru.homework12.crm.model.Client;
-import ru.homework12.crm.model.Phone;
+import ru.homework12.model.Address;
+import ru.homework12.model.Client;
+import ru.homework12.model.Phone;
 
 import java.util.List;
 import java.util.Optional;
