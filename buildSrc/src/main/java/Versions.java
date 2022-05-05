@@ -9,4 +9,5 @@ public interface Versions {
     String freemarker = "2.3.31";
     String gson = "2.8.9";
     String commonsIo = "2.11.0";
+    String reflections = "0.10.2";
 }
