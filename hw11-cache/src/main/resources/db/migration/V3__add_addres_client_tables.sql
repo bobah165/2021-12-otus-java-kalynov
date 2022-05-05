@@ -13,9 +13,9 @@ create table address
 
 ALTER TABLE phone
 ADD CONSTRAINT phone_client_id_fk
-FOREIGN KEY (client_id) REFERENCES client;
+FOREIGN KEY (client_id) REFERENCES client10;
 
-ALTER TABLE client
+ALTER TABLE client10
 ADD CONSTRAINT client_address_id_fk
 FOREIGN KEY (address_id) REFERENCES address;
 

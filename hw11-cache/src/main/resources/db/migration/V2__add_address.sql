@@ -1,1 +1,1 @@
-ALTER TABLE client ADD COLUMN address_id bigint;
+ALTER TABLE client10 ADD COLUMN address_id bigint;
