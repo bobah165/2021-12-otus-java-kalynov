@@ -1,4 +1,4 @@
-package ru.otus.services;
+package ru.homework13.services;
 
 public interface IOService {
     void out(String message);

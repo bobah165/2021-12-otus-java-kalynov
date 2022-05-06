@@ -1,6 +1,6 @@
-package ru.otus.services;
+package ru.homework13.services;
 
-import ru.otus.model.Player;
+import ru.homework13.model.Player;
 
 public class PlayerServiceImpl implements PlayerService {
 
@@ -12,8 +12,8 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Player getPlayer() {
-        ioService.out("Представьтесь пожалуйста");
-        String playerName = ioService.readLn("Введите имя: ");
+        ioService.out("Who are you?");
+        String playerName = ioService.readLn("Enter name: ");
         return new Player(playerName);
     }
 }

@@ -1,8 +1,8 @@
-package ru.otus.services;
+package ru.homework13.services;
 
-import ru.otus.model.DivisionEquation;
-import ru.otus.model.Equation;
-import ru.otus.model.MultiplicationEquation;
+import ru.homework13.model.DivisionEquation;
+import ru.homework13.model.Equation;
+import ru.homework13.model.MultiplicationEquation;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,9 +1,9 @@
-package ru.otus;
+package ru.homework13;
 
-import ru.otus.appcontainer.AppComponentsContainerImpl;
-import ru.otus.appcontainer.api.AppComponentsContainer;
-import ru.otus.config.AppConfig;
-import ru.otus.services.GameProcessor;
+import ru.homework13.appcontainer.AppComponentsContainerImpl;
+import ru.homework13.appcontainer.api.AppComponentsContainer;
+import ru.homework13.config.AppConfig;
+import ru.homework13.services.GameProcessor;
 
 /*
 В классе AppComponentsContainerImpl реализовать обработку, полученной в конструкторе конфигурации,
@@ -33,8 +33,8 @@ public class App {
 
         // Приложение должно работать в каждом из указанных ниже вариантов
         GameProcessor gameProcessor = container.getAppComponent(GameProcessor.class);
-        //GameProcessor gameProcessor = container.getAppComponent(GameProcessorImpl.class);
-        //GameProcessor gameProcessor = container.getAppComponent("gameProcessor");
+//        GameProcessor gameProcessor = container.getAppComponent(GameProcessorImpl.class);
+//        GameProcessor gameProcessor = container.getAppComponent("gameProcessor");
 
         gameProcessor.startGame();
     }

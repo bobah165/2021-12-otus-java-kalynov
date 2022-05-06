@@ -1,15 +1,16 @@
-package ru.otus.config;
+package ru.homework13.config;
 
-import ru.otus.appcontainer.api.AppComponent;
-import ru.otus.appcontainer.api.AppComponentsContainerConfig;
-import ru.otus.services.EquationPreparer;
-import ru.otus.services.EquationPreparerImpl;
-import ru.otus.services.GameProcessor;
-import ru.otus.services.GameProcessorImpl;
-import ru.otus.services.IOService;
-import ru.otus.services.IOServiceStreams;
-import ru.otus.services.PlayerService;
-import ru.otus.services.PlayerServiceImpl;
+
+import ru.homework13.appcontainer.api.AppComponent;
+import ru.homework13.appcontainer.api.AppComponentsContainerConfig;
+import ru.homework13.services.EquationPreparer;
+import ru.homework13.services.EquationPreparerImpl;
+import ru.homework13.services.GameProcessor;
+import ru.homework13.services.GameProcessorImpl;
+import ru.homework13.services.IOService;
+import ru.homework13.services.IOServiceStreams;
+import ru.homework13.services.PlayerService;
+import ru.homework13.services.PlayerServiceImpl;
 
 @AppComponentsContainerConfig(order = 1)
 public class AppConfig {

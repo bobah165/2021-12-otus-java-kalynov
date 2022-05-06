@@ -1,4 +1,4 @@
-package ru.otus.model;
+package ru.homework13.model;
 
 public class Player {
     private final String name;

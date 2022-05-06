@@ -1,4 +1,4 @@
-package ru.otus.model;
+package ru.homework13.model;
 
 public class GameResult {
     private static final String RESULT_PATTERN = "Уважаемый: %s. Всего было примеров: %d, отвечено верно: %d";

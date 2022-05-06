@@ -1,6 +1,6 @@
-package ru.otus.services;
+package ru.homework13.services;
 
-import ru.otus.model.Equation;
+import ru.homework13.model.Equation;
 
 import java.util.List;
 

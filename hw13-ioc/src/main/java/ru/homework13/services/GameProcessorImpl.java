@@ -1,17 +1,17 @@
-package ru.otus.services;
+package ru.homework13.services;
 
-import ru.otus.model.Equation;
-import ru.otus.model.GameResult;
-import ru.otus.model.Player;
+import ru.homework13.model.Equation;
+import ru.homework13.model.GameResult;
+import ru.homework13.model.Player;
 
 import java.util.List;
 
 public class GameProcessorImpl implements GameProcessor {
 
-    private static final String MSG_HEADER = "Проверка знаний таблицы умножения";
-    private static final String MSG_INPUT_BASE = "Введите цифру от 1 до 10";
-    private static final String MSG_RIGHT_ANSWER = "Верно\n";
-    private static final String MSG_WRONG_ANSWER = "Не верно\n";
+    private static final String MSG_HEADER = "check multiple table";
+    private static final String MSG_INPUT_BASE = "Enter number from 1 to 10";
+    private static final String MSG_RIGHT_ANSWER = "Ok\n";
+    private static final String MSG_WRONG_ANSWER = "Wrong\n";
 
     private final IOService ioService;
     private final EquationPreparer equationPreparer;
