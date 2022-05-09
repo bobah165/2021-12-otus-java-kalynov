@@ -26,6 +26,14 @@ public class Address{
         this.street = street;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
     @Override
     public String toString() {
         return "Address{" +

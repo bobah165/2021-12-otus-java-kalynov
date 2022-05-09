@@ -37,6 +37,21 @@ public class Client {
         this.phones = phones;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public Set<Phone> getPhones() {
+        return phones;
+    }
 
     @Override
     public String toString() {

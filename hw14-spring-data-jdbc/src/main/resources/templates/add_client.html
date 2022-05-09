@@ -10,60 +10,19 @@
 
 <form th:action="@{/save}" th:method="post" action="add_client.html">
 
-    <div class="form-group">
-        <label for="nameClient">name</label>
-        <input type="text" class="form-control" name="nameClient" id="nameClient" value="none">
-    </div>
-
-    <div class="form-group">
-        <label for="addressId">Author Name</label>
-        <input type="text" class="form-control" name="addressId" id="addressId" list="nameList">
-        <datalist id="nameList">
-            <option th:each="author : ${authors}" th:value="${author.nameAuthor}" th:text="${author.nameAuthor}">
-            </option>
-        </datalist>
-    </div>
-
-    <div class="form-group">
-        <label for="surname">Author Surname</label>
-        <input type="text" class="form-control" name="surname" id="surname" list="surnameList">
-        <datalist id="surnameList">
-            <option th:each="author : ${authors}" th:value="${author.surname}" th:text="${author.surname}">
-            </option>
-        </datalist>
-    </div>
-
-    <div class="form-group">
-        <label for="nameGenre">Genre</label>
-        <input type="text" class="form-control" id="nameGenre" name="nameGenre" list="genreList">
-        <datalist id="genreList">
-            <option th:each="genre : ${genres}" th:value="${genre.nameGenre}" th:text="${genre.nameGenre}">
-            </option>
-        </datalist>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
-<form method="post" action="">
-
     <label for="name">Client Name</label>
-    <input text="text" required placeholder="name" name="newName" id="name"><br><br>
-
-    <label for="pass">Client Password</label>
-    <input type="password" required placeholder="password" name="newPass" id="pass"><br><br>
+    <input text="text" required placeholder="name" name="name" id="name"><br><br>
 
     <label for="street">Client Street</label>
     <input text="text" placeholder="street" name="street" id="street"><br><br>
 
     <label>Client Phone</label>
-    <input text="text" placeholder="phone" name="phone"><br><br>
-    <input text="text" placeholder="phone" name="phone"><br><br>
-    <input text="text" placeholder="phone" name="phone"><br><br>
-    <input text="text" placeholder="phone" name="phone"><br><br>
+    <input text="text" placeholder="phone" name="phonesNumbers"><br><br>
+    <input text="text" placeholder="phone" name="phonesNumbers"><br><br>
+    <input text="text" placeholder="phone" name="phonesNumbers"><br><br>
+    <input text="text" placeholder="phone" name="phonesNumbers"><br><br>
 
     <input class="button" type="submit" value="Save Client">
-
 </form>
 
 </body>

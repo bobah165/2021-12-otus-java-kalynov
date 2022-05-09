@@ -18,10 +18,9 @@
         </thead>
         <tbody>
         <tr scope="row" th:each="client : ${clients}" align="center">
-            <td th:utext="${client.id}">...</td>
             <td th:utext="${client.name}">...</td>
-            <td th:utext="${client.address.street}">...</td>
-            <td th:each="phone : ${phones}" th:utext="${phone.number}">...</td>
+            <td th:utext="${client.street}">...</td>
+            <td th:utext="${client.phonesNumbers}">...</td>
         </tr>
         </tbody>
     </table>

@@ -30,6 +30,18 @@ public class Phone  {
         this.clientId = clientId;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public Long getClientId() {
+        return clientId;
+    }
+
     @Override
     public String toString() {
         return "Phone{" +
