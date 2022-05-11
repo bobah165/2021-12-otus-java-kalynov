@@ -1,0 +1,29 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title>Список клиентов</title>
+</head>
+
+<body>
+
+<div id="container">
+    <h2>Client Table</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Адресс</th>
+                <th>Номер телефона</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr scope="row" th:each="client : ${clients}" align="center">
+            <td th:utext="${client.name}">...</td>
+            <td th:utext="${client.street}">...</td>
+            <td th:utext="${client.phonesNumbers}">...</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
