@@ -43,6 +43,11 @@ allprojects {
             dependency("org.freemarker:freemarker:${Versions.freemarker}")
             dependency("com.google.code.gson:gson:${Versions.gson}")
             dependency("commons-io:commons-io:${Versions.commonsIo}")
+            dependency("io.grpc:grpc-netty:${Versions.grpc}")
+            dependency("io.grpc:grpc-protobuf:${Versions.grpc}")
+            dependency("io.grpc:grpc-stub:${Versions.grpc}")
+            dependency("com.google.errorprone:error_prone_annotations:${Versions.errorProneAnnotations}")
+            dependency("org.apache.tomcat:annotations-api:${Versions.tomcatAnnotationsApi}")
         }
     }
 
@@ -53,6 +58,8 @@ allprojects {
         resolutionStrategy {
             force("com.google.errorprone:error_prone_annotations:2.11.0")
             force("net.java.dev.jna:jna:5.8.0")
+//            force("com.google.protobuf:protobuf-java:3.19.2")
+            force("com.google.errorprone:error_prone_annotations:2.11.0")
         }
     }
 }
