@@ -1,10 +1,7 @@
 package ru.homework17.client.service;
 
 import io.grpc.ManagedChannel;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import io.grpc.stub.StreamObserver;
-import ru.otus.protobuf.generated.Empty;
 import ru.otus.protobuf.generated.NumberClient;
 import ru.otus.protobuf.generated.NumberServer;
 import ru.otus.protobuf.generated.NumberServiceGrpc;
@@ -15,13 +12,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ClientNumberService {
-//    private static final Logger logger = LoggerFactory.getLogger(ClientNumberService.class);
 
     private final NumberServiceGrpc.NumberServiceBlockingStub stub;
 
     private volatile int serverResult;
-    private volatile int currentResult;
-    private volatile AtomicInteger currentValue = new AtomicInteger(0);
+
+    private int currentResult;
+    private int currentValue = 0;
+
+    private final static int FIRST_VALUE = 0;
+    private final static int LAST_VALUE = 30;
+    private final static int CLIENT_LOOP_COUNT = 50;
 
     public ClientNumberService(ManagedChannel channel) {
         this.stub = NumberServiceGrpc.newBlockingStub(channel);
@@ -29,26 +30,23 @@ public class ClientNumberService {
 
     public void get() {
         var requestNumbers = NumberClient.newBuilder()
-                                         .setFirst(0)
-                                         .setLast(10)
+                                         .setFirst(FIRST_VALUE)
+                                         .setLast(LAST_VALUE)
                                          .build();
-
 
         stub.get(requestNumbers).forEachRemaining((result) -> {
             serverResult = result.getResult();
             System.out.println("result from server is " + serverResult);
 
             var thread = new Thread(() -> print());
-            thread.setName("current value");
             thread.setDaemon(true);
             thread.start();
-
         });
     }
 
     private synchronized void print() {
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < CLIENT_LOOP_COUNT; i++) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -56,10 +54,10 @@ public class ClientNumberService {
             }
 
             if (currentResult == serverResult) {
-                currentValue.incrementAndGet();
+                currentValue++;
             } else {
                 currentResult = serverResult;
-                currentValue.addAndGet(serverResult + 1);
+                currentValue += currentResult + 1;
             }
             System.out.println("client is " + currentValue);
         }

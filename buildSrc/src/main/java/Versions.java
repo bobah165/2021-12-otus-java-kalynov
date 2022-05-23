@@ -10,7 +10,8 @@ public interface Versions {
     String gson = "2.8.9";
     String commonsIo = "2.11.0";
     String reflections = "0.10.2";
-    String grpc = "1.46.0";
+    String grpc = "1.45.1";
     String errorProneAnnotations = "2.11.0";
     String tomcatAnnotationsApi = "6.0.53";
+    String protobufProtoc = "3.19.2";
 }

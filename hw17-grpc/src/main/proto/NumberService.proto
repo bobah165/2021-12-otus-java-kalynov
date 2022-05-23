@@ -13,8 +13,6 @@ message NumberServer {
     int32 result = 1;
 }
 
-message Empty {}
-
 service NumberService {
     rpc get(NumberClient) returns (stream NumberServer);
 }
