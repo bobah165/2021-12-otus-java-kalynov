@@ -8,6 +8,9 @@ import ru.otus.protobuf.generated.NumberServiceGrpc;
 
 import java.nio.channels.Channel;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -15,7 +18,7 @@ public class ClientNumberService {
 
     private final NumberServiceGrpc.NumberServiceBlockingStub stub;
 
-    private volatile int serverResult;
+    private int serverResult;
 
     private int currentResult;
     private int currentValue = 0;
@@ -34,17 +37,17 @@ public class ClientNumberService {
                                          .setLast(LAST_VALUE)
                                          .build();
 
+        var executor = getExecutor();
+
         stub.get(requestNumbers).forEachRemaining((result) -> {
             serverResult = result.getResult();
             System.out.println("result from server is " + serverResult);
 
-            var thread = new Thread(() -> print());
-            thread.setDaemon(true);
-            thread.start();
+            executor.execute(()-> print());
         });
     }
 
-    private synchronized void print() {
+    private void print() {
 
         for (int i = 0; i < CLIENT_LOOP_COUNT; i++) {
             try {
@@ -61,5 +64,16 @@ public class ClientNumberService {
             }
             System.out.println("client is " + currentValue);
         }
+    }
+
+    private ExecutorService getExecutor() {
+        return Executors.newFixedThreadPool(1, new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                var tread = Executors.defaultThreadFactory().newThread(r);
+                tread.setDaemon(true);
+                return tread;
+            }
+        });
     }
 }
