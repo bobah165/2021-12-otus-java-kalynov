@@ -1,89 +1,83 @@
 package ru.homework17.client.service;
 
 import io.grpc.ManagedChannel;
+import io.grpc.stub.StreamObserver;
 import ru.otus.protobuf.generated.NumberClient;
+import ru.otus.protobuf.generated.NumberServer;
 import ru.otus.protobuf.generated.NumberServiceGrpc;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ClientNumberService {
-    private final NumberServiceGrpc.NumberServiceBlockingStub stub;
+    private final NumberServiceGrpc.NumberServiceStub stub;
 
-    private int serverResult = 0;
-    private int currentResult;
-    private int currentValue = 0;
+    private AtomicInteger serverResult = new AtomicInteger(0);
+    private AtomicInteger currentResult = new AtomicInteger(0);
+    private AtomicInteger currentValue = new AtomicInteger(0);
 
     private final static int FIRST_VALUE = 0;
     private final static int LAST_VALUE = 30;
     private final static int CLIENT_LOOP_COUNT = 50;
 
-    private final AtomicBoolean isReadFromServer = new AtomicBoolean(false);
-
     public ClientNumberService(ManagedChannel channel) {
-        this.stub = NumberServiceGrpc.newBlockingStub(channel);
+        this.stub = NumberServiceGrpc.newStub(channel);
     }
 
-    public void get() {
+    public void get() throws InterruptedException {
         var requestNumbers = NumberClient.newBuilder()
                                          .setFirst(FIRST_VALUE)
                                          .setLast(LAST_VALUE)
                                          .build();
 
-        var thread = getThread();
-        thread.start();
+        var startServerReadLatch = new CountDownLatch(1);
+        var endServerReadLatch = new CountDownLatch(1);
 
-        readFromService(requestNumbers);
+        readFromService(requestNumbers, endServerReadLatch, startServerReadLatch);
+        writeByClient(startServerReadLatch);
+
+        endServerReadLatch.await();
     }
 
-    private synchronized void readFromService(NumberClient requestNumbers) {
-        stub.get(requestNumbers).forEachRemaining((result) -> {
+    private synchronized void readFromService(NumberClient requestNumbers,
+                                              CountDownLatch endServerReadlatch,
+                                              CountDownLatch startServerReadLatch) {
 
-            serverResult = result.getResult();
-            isReadFromServer.set(true);
-
-            notifyAll();
-
-            System.out.println("result from server is " + serverResult);
-
-            try {
-                wait(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        stub.get(requestNumbers, new StreamObserver<NumberServer>() {
+            @Override
+            public void onNext(NumberServer value) {
+                serverResult.getAndSet(value.getResult());
+                System.out.println("server result is " + serverResult.get());
+                startServerReadLatch.countDown();
             }
-            isReadFromServer.set(false);
-        });
-    }
 
-    private Thread getThread() {
-        return new Thread(() -> {
-            try {
-                writeByClient();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+            @Override
+            public void onError(Throwable t) {
+                System.err.println(t);
+            }
+
+            @Override
+            public void onCompleted() {
+                endServerReadlatch.countDown();
             }
         });
     }
 
-    private synchronized void writeByClient() throws InterruptedException {
+    private synchronized void writeByClient(CountDownLatch latch) throws InterruptedException {
+        latch.await();
         for (int i = 0; i < CLIENT_LOOP_COUNT; i++) {
-
-            while (!isReadFromServer.get()) {
-                wait();
-            }
 
             Thread.sleep(1000);
 
-            if (currentResult == serverResult) {
-                currentValue++;
-                System.out.println("client is " + currentValue);
-                wait();
+            if (currentResult.get() == serverResult.get()) {
+                currentValue.incrementAndGet();
             } else {
-                currentResult = serverResult;
-                currentValue += currentResult + 1;
-                System.out.println("client is " + currentValue);
+                currentResult.getAndSet(serverResult.get());
+                currentValue.addAndGet(currentResult.get() + 1);
             }
+            System.out.println("client is " + currentValue.get());
         }
     }
 }
