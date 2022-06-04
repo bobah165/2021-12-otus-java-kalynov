@@ -15,8 +15,9 @@ public class ClientNumberService {
     private final NumberServiceGrpc.NumberServiceStub stub;
 
     private AtomicInteger serverResult = new AtomicInteger(0);
-    private AtomicInteger currentResult = new AtomicInteger(0);
-    private AtomicInteger currentValue = new AtomicInteger(0);
+
+    private int currentResult = 0;
+    private int currentValue = 0;
 
     private final static int FIRST_VALUE = 0;
     private final static int LAST_VALUE = 30;
@@ -71,13 +72,13 @@ public class ClientNumberService {
 
             Thread.sleep(1000);
 
-            if (currentResult.get() == serverResult.get()) {
-                currentValue.incrementAndGet();
+            if (currentResult == serverResult.get()) {
+                currentValue++;
             } else {
-                currentResult.getAndSet(serverResult.get());
-                currentValue.addAndGet(currentResult.get() + 1);
+                currentResult = serverResult.get();
+                currentValue += currentResult + 1;
             }
-            System.out.println("client is " + currentValue.get());
+            System.out.println("client is " + currentValue);
         }
     }
 }
