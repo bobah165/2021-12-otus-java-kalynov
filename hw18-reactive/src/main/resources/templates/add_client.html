@@ -1,0 +1,29 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Добавить клиента</title>
+</head>
+
+<body>
+
+
+<h4>Добавить клиента</h4>
+
+<form th:action="@{/save}" th:method="post" action="add_client.html">
+
+    <label for="name">Client Name</label>
+    <input text="text" required placeholder="name" name="name" id="name"><br><br>
+
+    <label for="street">Client Street</label>
+    <input text="text" placeholder="street" name="street" id="street"><br><br>
+
+    <label>Client Phone</label>
+    <input text="text" placeholder="phone" name="phonesNumbers"><br><br>
+    <input text="text" placeholder="phone" name="phonesNumbers"><br><br>
+    <input text="text" placeholder="phone" name="phonesNumbers"><br><br>
+    <input text="text" placeholder="phone" name="phonesNumbers"><br><br>
+
+    <input class="button" type="submit" value="Save Client">
+</form>
+
+</body>
+</html>
