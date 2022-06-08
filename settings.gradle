@@ -16,4 +16,8 @@ include 'hw13-ioc'
 include 'hw14-spring-data-jdbc'
 include 'hw15-executor'
 include 'hw16-queues'
+include 'hw17-grpc'
+include 'server'
+include 'server'
+include 'hw17-grpc'
 
