@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.6.6'
+}
+
+group 'ru.otus.homework'
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-data-jdbc"
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+
+    implementation "org.flywaydb:flyway-core"
+    implementation "org.postgresql:postgresql"
+
+    implementation "ch.qos.logback:logback-classic"
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
