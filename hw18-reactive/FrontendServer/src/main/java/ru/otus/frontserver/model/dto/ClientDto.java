@@ -1,6 +1,8 @@
 package ru.otus.frontserver.model.dto;
 
+import lombok.Data;
 
+@Data
 public class ClientDto {
     private String name;
     private String street;
@@ -14,27 +16,27 @@ public class ClientDto {
         this.phonesNumbers = phonesNumbers;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getPhonesNumbers() {
-        return phonesNumbers;
-    }
-
-    public void setPhonesNumbers(String phonesNumbers) {
-        this.phonesNumbers = phonesNumbers;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public String getStreet() {
+//        return street;
+//    }
+//
+//    public void setStreet(String street) {
+//        this.street = street;
+//    }
+//
+//    public String getPhonesNumbers() {
+//        return phonesNumbers;
+//    }
+//
+//    public void setPhonesNumbers(String phonesNumbers) {
+//        this.phonesNumbers = phonesNumbers;
+//    }
 }
